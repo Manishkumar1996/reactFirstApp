@@ -1,10 +1,12 @@
 import React from 'react';
-import './App.css';
-import Navbar from './component/Navbar';
-import ButtonComp from './component/ButtonComp';
-import SpinnerComp from './component/SpinnerComp';
-import SelectComp from './component/SelectComp';
-import TableComp from './component/TableComp';
+import '../App.css';
+import Navbar from './Navbar';
+import ButtonComp from './ButtonComp';
+import SpinnerComp from './SpinnerComp';
+import SelectComp from './SelectComp';
+import TableComp from './TableComp';
+
+import {fetchJson} from '../Actions/JsonList';
 
 
 class App extends React.Component {
@@ -13,7 +15,6 @@ class App extends React.Component {
         brand: 'First React',
         link: ['Features', 'Component'],
         item: ['Action', 'About', 'Home'],
-        jsonResponse: [],
         selectedOption: null,
     };
 
@@ -22,18 +23,7 @@ class App extends React.Component {
     };
 
     componentDidMount() {
-        fetch('http://www.json-generator.com/api/json/get/cgeoLjEvLS?indent=2',{
-            method: 'GET'
-        })
-        .then(response => response.json())
-        .then(json => {
-            this.setState({
-                jsonResponse: json,
-            });
-        })
-        .catch(error => {
-            console.log(error)
-        })
+        this.props.dispatch(fetchJson());
     }
 
 
@@ -58,7 +48,7 @@ class App extends React.Component {
 
                     <div className="row pt-3">
                         <div className="col-12 col-sm-2 col-md-4">
-                            <SelectComp options={this.state.jsonResponse} change={this.selectChange}/>
+                            <SelectComp options={this.props.json} change={this.selectChange}/>
                         </div>
                         <div className="col-12 col-sm-2 col-md-4">
 
@@ -69,7 +59,7 @@ class App extends React.Component {
                     </div>
 
                     <div className="pt-3">
-                        <TableComp rows={this.state.jsonResponse} selected={this.state.selectedOption}/>
+                        <TableComp rows={this.props.json} selected={this.state.selectedOption}/>
                     </div>
 
                 </div>
