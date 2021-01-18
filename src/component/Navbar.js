@@ -1,5 +1,5 @@
 import React from 'react';
-import {Navbar, NavDropdown, Nav} from 'react-bootstrap';
+import {Navbar, Nav} from 'react-bootstrap';
 
 
 class NavBar extends React.Component {
@@ -8,24 +8,15 @@ class NavBar extends React.Component {
 
         return (
             <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">
-                <Navbar.Brand href="#home">{navOption.brand}</Navbar.Brand>
+                <Navbar.Brand href="#home"
+                              onClick={() => this.props.changePage('Home')}>{navOption.brand}</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                 <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="mr-auto">
+                    <Nav className="ml-auto">
                         {navOption.link.map(function (link) {
-                            return <Nav.Link key={link} href={"#" + link}>{link}</Nav.Link>
-                        })}
-                        <NavDropdown title="More" id="collasible-nav-dropdown">
-                            {navOption.item.map(function (item) {
-                                return <NavDropdown.Item key={item} href={"#" + item}>{item}</NavDropdown.Item>
-                            })}
-                        </NavDropdown>
-                    </Nav>
-                    <Nav>
-                        <Nav.Link href="#deets">More deets</Nav.Link>
-                        <Nav.Link eventKey={2} href="#memes">
-                            Dank memes
-                        </Nav.Link>
+                            return <Nav.Link key={link} onClick={() => this.props.changePage(link)}
+                            >{link}</Nav.Link>
+                        }.bind(this))}
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

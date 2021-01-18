@@ -13,7 +13,6 @@ export const fetchJson = () => async (dispatch) => {
         );
         const result = await response.json();
 
-
         dispatch({type: JSON_FETCH_RESULT, payload: result});
 
         // return result;
